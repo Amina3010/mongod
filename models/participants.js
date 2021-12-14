@@ -1,12 +1,22 @@
 const mongoose = require('mongoose');
 
 const participantsSchema = new mongoose.Schema({
-    firstname : {
+    name : {
         type : String,
         required : true,
     },
 
-    lastname : {
+
+    courses : [
+        {
+
+            type : mongoose.Schema.Types.ObjectId,
+            ref: "Courses",
+        }
+    ]
+
+
+   /*  lastname : {
         type : String,
         required : true,
     },
@@ -20,7 +30,7 @@ const participantsSchema = new mongoose.Schema({
         type : String,
         required : true,
     },
-
+ */
 });
 
 const participantsModel = mongoose.model('Participants', participantsSchema);

@@ -1,99 +1,82 @@
-const mongoose = require('mongoose');
-const Course = require('./models/course')
-const Groupe = require('./models/groupe')
-const Participants = require('./models/participants')
+const mongoose = require("mongoose");
+const Courses = require("./models/courses");
+const Participants = require("./models/participants");
 
-const connecter = async() =>{
-    try{
-        await mongoose.connect('mongodb://localhost:27017/bootcamp');
-        console.log('connected to the DataBase')
-    }
-    catch(e){
-        console.log(e.message)
+const connecter = async () => {
+  try {
+    await mongoose.connect("mongodb://localhost:27017/bootcamp");
+    console.log("connected to the DataBase");
+  } catch (e) {
+    console.log(e.message);
+  }
 
-    }
-}
+};
+
 
 const recherche =async ()=> {
-    // const course = await Course.find({'label':'HTML'})
+    const participants= await Participants.find()
+    .populate("courses", "-_id -__v -participants");
 
-    // const course = await Course.find({'volume': 5})
-    
-    const course = await Course.find({'volume': { $gt: 5 } })
-    
-    console.log(course)
+    console.log(participants)
+
 }
 
 
 
+/* const creer = async () => {
+  try {
+    const html = await Courses.create(
+    
+      {
+        label: "HTML",
+        description: "Hyper Text Markup Language",
+        volume: 30,
+        starDate: "2021/09/12",
+      });
+
+      const css = await Courses.create(
+      {
+        label: "CSS",
+        description: "Cascading Style Sheets",
+        volume: 30,
+        starDate: "2021/09/12",
+      });
+
+      const typescript = await Courses.create(
+      {
+        label: "TypeScript",
+        description: "TypeScript est un langage de programmation",
+        volume: 20,
+        starDate: "2021/09/12",
+      });
 
 
+    console.log(html,css,typescript);
+
+    const participants = await Participants.insertMany([
+      {
+        name: "Mamadou MBENGUE",
+        courses:[
+            html._id , css._id , typescript._id
+        ]
+      },
 
 
- /* const creer = async ()=> {
-     try{
-        const course= await Course.insertMany([{
-             label: 'HTML',
-            description: 'Hyper Text Markup Language',
-            volume: 5,
-            starDate: '2021/09/12',
+      {
+        name: "Aminata GAYE",
+        courses:[
+            css._id , typescript._id
+        ]
+      },
 
-         },
-         {
-            label: 'CSS',
-            description: 'Cascading Style Sheets',
-            volume: 6,
-            starDate: '2021/09/12',
-
-         },
-
-        
-         {
-            label: 'WordPress',
-            description: 'Gratuit libre et open source',
-            volume: 5,
-            starDate: '2021/09/12',
-
-         }]);
-console.log(course)
-
-const participants= await Participants.insertMany([{
-firstname:'Mamadou',
-lastname:'Moussa',
-birthDate:2000/30/10,
-address:"Yoff"
-
-},
-
-{
-
-firstname:'Aminata',
-lastname:'Mami',
-birthDate:2000/30/10,
-address:"Parcelle"
-
-},
-
-{
-firstname:'Awa',
-lastname:'Abdou',
-birthDate:2000/30/10,
-address:"Asecna"
-
-},
-
-
-]);
-       
-
-     }
-     catch(e){
-        console.error(e.message)
-    }
- }
- creer();
- */
-
+      
+    ]);
+    
+  } catch (e) {
+    console.error(e.message);
+  }
+}; */
 
 connecter();
 recherche();
+// creer();
